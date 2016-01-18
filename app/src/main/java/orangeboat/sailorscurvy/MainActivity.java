@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "float" + lastX, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(300);
     }
@@ -71,18 +71,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        deltaX = Math.abs(lastX - event.values[0]);
+        /*deltaX = Math.abs(lastX - event.values[0]);
         deltaY = Math.abs(lastY - event.values[1]);
         deltaZ = Math.abs(lastZ - event.values[2]);
-        if (deltaX < 2)
+        if (deltaX < 3)
             deltaX = 0;
-        if (deltaY < 2)
+        if (deltaY < 3)
             deltaY = 0;
+        */
         lastX = event.values[0];
-        lastY = event.values[1];
-        lastZ = event.values[2];
-        if(deltaX > 0){
-            v.vibrate(500);
+        if(lastX < .05f && lastX > -.05f){
+            lastX = 0;
+        }
+        if(lastX > 0){
+            v.vibrate(100);
+        }
+        if(lastX < 0){
+            v.vibrate(100);
         }
     }
 
