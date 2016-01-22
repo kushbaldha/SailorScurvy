@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,20 +24,24 @@ import android.view.WindowManager;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private float lastX, lastY, lastZ;
+    public float lastX;
     private float deltaX = 0;
     private float deltaY = 0;
     private float deltaZ = 0;
     Vibrator v;
+    public MainActivity(){
+        super();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(new Display(this));
         //turn title off
         //fullscreen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
       //setContentView(R.layout.activity_main);
 
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(300);
+        setContentView(new Display(this, displayMetrics));
     }
 
     @Override
@@ -95,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         if(lastX > 0){
             v.vibrate(100);
+
         }
         if(lastX < 0){
             v.vibrate(100);

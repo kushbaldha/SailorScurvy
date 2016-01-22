@@ -13,16 +13,22 @@ import android.view.SurfaceView;
  */
 public class Display extends SurfaceView implements SurfaceHolder.Callback
 {
+    MainActivity main = new MainActivity();
     MainThread mainThread;
     Paint paint;
     DisplayMetrics displayMetrics;
-    public Display(Context context) {
+    int x;
+    int y;
+    int dx = 50;
+    public Display(Context context, DisplayMetrics m) {
         super(context);
         getHolder().addCallback(this);
         mainThread = new MainThread(getHolder(),this);
         paint = new Paint();
         paint.setColor(Color.BLUE);
-        displayMetrics = new DisplayMetrics();
+        displayMetrics = m;
+        x = displayMetrics.widthPixels/2;
+        y = displayMetrics.heightPixels/2;
     }
 
     @Override
@@ -55,15 +61,15 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     }
     public void update()
     {
-
+        dx += main.lastX;
     }
 
     @Override
     public void draw(Canvas canvas)
     {
         paint.setColor(Color.BLUE);
-        canvas.drawRect(0,0,1080, 1766, paint);
+        canvas.drawRect(0,0,displayMetrics.widthPixels, displayMetrics.heightPixels, paint);
         paint.setColor(Color.RED);
-        canvas.drawRect(250,250,500,500,paint);
+        canvas.drawRect(x-dx,y-dx,x+dx,y+dx,paint);
     }
 }
