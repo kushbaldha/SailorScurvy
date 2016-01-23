@@ -21,19 +21,11 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
-    private SensorManager sensorManager;
-    private Sensor accelerometer;
-    public float lastX;
-    private float deltaX = 0;
-    private float deltaY = 0;
-    private float deltaZ = 0;
-    Vibrator v;
-    public MainActivity(){
-        super();
-    }
+public class MainActivity extends AppCompatActivity{
+    SensorData sensor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sensor = new SensorData(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -55,12 +47,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         .setAction("Action", null).show();
             }
         });*/
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
-        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(300);
-        setContentView(new Display(this, displayMetrics));
+
+        setContentView(new Display(this, displayMetrics, sensor));
     }
 
     @Override
@@ -84,41 +72,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         return super.onOptionsItemSelected(item);
     }
-
-   // @Override
-    public void onSensorChanged(SensorEvent event) {
-        /*deltaX = Math.abs(lastX - event.values[0]);
-        deltaY = Math.abs(lastY - event.values[1]);
-        deltaZ = Math.abs(lastZ - event.values[2]);
-        if (deltaX < 3)
-            deltaX = 0;
-        if (deltaY < 3)
-            deltaY = 0;
-        */
-        lastX = event.values[0];
-        if(lastX < .05f && lastX > -.05f){
-            lastX = 0;
-        }
-        if(lastX > 0){
-            v.vibrate(100);
-
-        }
-        if(lastX < 0){
-            v.vibrate(100);
-        }
-    }
-
-   // @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
     @Override
     public void onPause()
     {
+        sensor.unregister();
         super.onPause();
     }
     @Override
     public void onResume()
     {
+        sensor.register();
         super.onResume();
     }
 }
