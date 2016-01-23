@@ -64,7 +64,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     public void update()
     {
         dx -= 50*sensor.lastX;
-        dx2 -= 50*sensor.lastX;
+        dx2 = dx + 100;
     }
 
     @Override
@@ -74,5 +74,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         canvas.drawRect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels, paint);
         paint.setColor(Color.RED);
         canvas.drawRect(x-dx,y-50,x-dx2,y+50,paint);
+        paint.setTextSize(200f);
+        canvas.drawText(""+sensor.lastX, 100, 300, paint);
+
     }
 }
