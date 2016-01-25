@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,6 +15,7 @@ import android.view.SurfaceView;
 public class Display extends SurfaceView implements SurfaceHolder.Callback
 {
     MainThread mainThread;
+
     Paint paint;
     DisplayMetrics displayMetrics;
     SensorData sensor;
@@ -21,6 +23,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     int y;
     int dx = 50;
     int dx2 = -50;
+    Rect rect = new Rect(x-dx,y-50,x-dx2,y+50);
     public Display(Context context, DisplayMetrics m, SensorData d) {
         super(context);
         getHolder().addCallback(this);
@@ -63,8 +66,15 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     }
     public void update()
     {
-        dx += 25*sensor.lastX;
+        dx += 40*sensor.lastX;
         dx2 = dx + 100;
+        rect.set(x-dx,y-50,x-dx2,y+50);
+        if (rect.right > displayMetrics.widthPixels-50){
+            rect.set(x*2-100,y-50,x*2,y+50);
+        }
+        if (rect.left < 170){
+            rect.set(0,y-50,100,y+50);
+        }
     }
 
     @Override
@@ -73,7 +83,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         paint.setColor(Color.BLUE);
         canvas.drawRect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels, paint);
         paint.setColor(Color.RED);
-        canvas.drawRect(x-dx,y-50,x-dx2,y+50,paint);
+        canvas.drawRect(rect,paint);
         paint.setTextSize(200f);
         canvas.drawText(""+sensor.lastX, 100, 300, paint);
 
