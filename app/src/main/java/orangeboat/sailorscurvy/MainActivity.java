@@ -23,6 +23,7 @@ import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity{
     SensorData sensor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sensor = new SensorData(this);

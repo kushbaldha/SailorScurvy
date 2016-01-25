@@ -14,11 +14,19 @@ public class SensorData implements SensorEventListener {
     Vibrator v;
     public float lastX;
     private SensorManager sensorManager;
+    private SensorManager sensorManagerOrientation;
+    private Sensor orientation;
     private Sensor rotation;
+    private float gravity;
+    private float linear_acceleration;
+    final float alpha = (float)0.8;
+
 
     public SensorData(Context context){
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         rotation = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        sensorManagerOrientation = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        orientation = sensorManagerOrientation.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, rotation, SensorManager.SENSOR_DELAY_GAME);
         v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(300);
@@ -40,21 +48,27 @@ public class SensorData implements SensorEventListener {
         if (deltaY < 3)
             deltaY = 0;
         */
-        lastX = event.values[0];
+
+        gravity = alpha * gravity + (1 - alpha) * event.values[0];
+        linear_acceleration = event.values[0] - gravity;
+        System.out.println(linear_acceleration);
+
+        lastX = linear_acceleration;
         if(lastX < .05f && lastX > -.05f){
             lastX = 0;
         }
-        if(lastX > 0){
-           // v.vibrate(100);
+      /*  if(lastX > 0){
+            v.vibrate(100);
 
         }
         if(lastX < 0){
-          //  v.vibrate(100);
-        }
+            v.vibrate(100);
+        }*/
     }
 
     public void register(){
         sensorManager.registerListener(this, rotation, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManagerOrientation.registerListener(this, orientation, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void unregister(){

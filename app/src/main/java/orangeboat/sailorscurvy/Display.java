@@ -63,7 +63,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     }
     public void update()
     {
-        dx -= 50*sensor.lastX;
+        dx += 25*sensor.lastX;
         dx2 = dx + 100;
     }
 
