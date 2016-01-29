@@ -55,11 +55,11 @@ public class SensorData implements SensorEventListener {
         System.out.println(linear_acceleration);
         lastX = -linear_acceleration;
         */
-
         lastX = event.values[0];
-        if(lastX < .5f && lastX > -.5f){
+        System.out.println(lastX);
+/*        if(lastX < .5f && lastX > -.5f){
             lastX = 0;
-        }
+        }*/
         if( lastX > 3f){
             lastX = 3f;
         }

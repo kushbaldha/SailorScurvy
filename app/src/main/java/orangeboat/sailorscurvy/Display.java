@@ -66,7 +66,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     }
     public void update()
     {
-        dx += 40*sensor.lastX;
+        dx += 10*sensor.lastX;
         dx2 = dx + 100;
         rect.set(x-dx,y-50,x-dx2,y+50);
         if (rect.right > displayMetrics.widthPixels-50){
