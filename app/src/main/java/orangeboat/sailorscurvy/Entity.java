@@ -15,7 +15,7 @@ public class Entity
     int TW;
     int x;
     int y;
-    public void Entity(Bitmap img,int x, int y)
+    public Entity(Bitmap img,int x, int y)
     {
         this.x = x;
         this.y = y;

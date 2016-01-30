@@ -12,7 +12,7 @@ import android.os.Vibrator;
  */
 public class SensorData implements SensorEventListener {
     Vibrator v;
-    public float lastX;
+    public static float lastX;
     private SensorManager sensorManager;
     //private SensorManager sensorManagerOrientation;
    // private Sensor orientation;

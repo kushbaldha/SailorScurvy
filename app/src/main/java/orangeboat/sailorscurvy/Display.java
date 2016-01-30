@@ -1,6 +1,8 @@
 package orangeboat.sailorscurvy;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,7 +19,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     MainThread mainThread;
 
     Paint paint;
-    DisplayMetrics displayMetrics;
+    public static DisplayMetrics displayMetrics;
+    GamePanel gamePanel = new GamePanel(BitmapFactory.decodeResource(getResources(), R.drawable.boatforward1));
     SensorData sensor;
     int x;
     int y;
@@ -38,6 +41,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        gamePanel.load();
         mainThread.setRunning(true);
         mainThread.start();
     }
@@ -62,30 +66,22 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
             }
             retry = false;
         }
-
     }
     public void update()
     {
-        dx += 10*sensor.lastX;
-        dx2 = dx + 100;
-        rect.set(x-dx,y-50,x-dx2,y+50);
-        if (rect.right > displayMetrics.widthPixels-50){
-            rect.set(x*2-100,y-50,x*2,y+50);
-        }
-        if (rect.left < 170){
-            rect.set(0,y-50,100,y+50);
-        }
+        gamePanel.update();
     }
 
     @Override
     public void draw(Canvas canvas)
     {
-        paint.setColor(Color.BLUE);
+        /*paint.setColor(Color.BLUE);
         canvas.drawRect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels, paint);
         paint.setColor(Color.RED);
         canvas.drawRect(rect,paint);
-        paint.setTextSize(200f);
+        paint.setTextSize(200f);*/
         canvas.drawText(""+sensor.lastX, 100, 300, paint);
+        gamePanel.draw(canvas);
 
     }
 }
