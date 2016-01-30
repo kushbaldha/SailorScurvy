@@ -57,9 +57,9 @@ public class SensorData implements SensorEventListener {
         */
         lastX = event.values[0];
         System.out.println(lastX);
-/*        if(lastX < .5f && lastX > -.5f){
+        if(lastX < .05f && lastX > -.05f){
             lastX = 0;
-        }*/
+        }
         if( lastX > 3f){
             lastX = 3f;
         }

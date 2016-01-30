@@ -20,7 +20,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
 
     Paint paint;
     public static DisplayMetrics displayMetrics;
-    GamePanel gamePanel = new GamePanel(BitmapFactory.decodeResource(getResources(), R.drawable.boatforward1));
+    GamePanel gamePanel = new GamePanel(BitmapFactory.decodeResource(getResources(), R.drawable.boatforward));
     SensorData sensor;
     int x;
     int y;
@@ -80,8 +80,9 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         paint.setColor(Color.RED);
         canvas.drawRect(rect,paint);
         paint.setTextSize(200f);*/
-        canvas.drawText(""+sensor.lastX, 100, 300, paint);
         gamePanel.draw(canvas);
+        canvas.drawText("" + SensorData.lastX, 100, 300, paint);
+
 
     }
 }
