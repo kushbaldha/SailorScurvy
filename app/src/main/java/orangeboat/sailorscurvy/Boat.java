@@ -21,25 +21,43 @@ public class Boat extends Entity
     Animation boatLeft;
     Animation boatRight;
     Paint paint;
-    public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y)
+    int midline;
+    int limit;
+    public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y, int limit)
     {
         super(boatForward, x, y);
+        this.limit = limit;
         this.boatForwardImg = boatForward;
         this.boatLeftImg = boatleft;
         this.boatRightImg = boatright;
+        midline = limit/2 - boatRightImg.getWidth()/8;
         this.boatForward = new Animation();
         this.boatLeft = new Animation();
         this.boatRight = new Animation();
         paint = new Paint();
         paint.setColor(Color.BLUE);
-        sensitivity = 15;
+        sensitivity = 20;
     }
     public void update()
     {
         dx = (int)(SensorData.lastX* sensitivity);
-        if(dx<2 && dx>-2)
-            dx=0;
-        x-=dx;
+        if(dx<2 && dx>-2) {
+            dx = 0;
+            //midline code
+            /*
+            if(x < midline-2){
+               x += 10;
+            }
+            else if(x > midline+2){
+                x -= 10;
+            }
+            */
+            //midline code
+        }
+        if((x > 0 && dx > 0) || (dx < 0 && x < limit-boatRightImg.getWidth()/4) ) {
+            //adds edges of the screen
+            x -= dx;
+        }
         boatForward.update();
         boatLeft.update();
         boatRight.update();
