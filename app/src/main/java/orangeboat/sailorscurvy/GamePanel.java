@@ -9,9 +9,9 @@ import android.graphics.Canvas;
 public class GamePanel
 {
     Boat boat;
-    public GamePanel(Bitmap img)
+    public GamePanel(Bitmap img, Bitmap img2, Bitmap img3)
     {
-        boat = new Boat(img,500,500);
+        boat = new Boat(img, img2, img3, 500,1000);
     }
     public void load()
     {

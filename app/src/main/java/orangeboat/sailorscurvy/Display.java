@@ -20,7 +20,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
 
     Paint paint;
     public static DisplayMetrics displayMetrics;
-    GamePanel gamePanel = new GamePanel(BitmapFactory.decodeResource(getResources(), R.drawable.boatforward));
+    GamePanel gamePanel = new GamePanel(BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),BitmapFactory.decodeResource(getResources(), R.drawable.boatleft),BitmapFactory.decodeResource(getResources(), R.drawable.boatright));
+
     SensorData sensor;
     int x;
     int y;
