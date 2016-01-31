@@ -1,4 +1,4 @@
-package orangeboat.sailorscurvy;
+package orangeboat.sailorscurvy.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

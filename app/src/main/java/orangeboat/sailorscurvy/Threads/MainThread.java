@@ -1,7 +1,9 @@
-package orangeboat.sailorscurvy;
+package orangeboat.sailorscurvy.Threads;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
+
+import orangeboat.sailorscurvy.Display;
 
 /**
  * Created by Kush on 11/6/2015.

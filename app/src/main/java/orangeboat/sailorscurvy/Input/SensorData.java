@@ -1,4 +1,4 @@
-package orangeboat.sailorscurvy;
+package orangeboat.sailorscurvy.Input;
 
 import android.content.Context;
 import android.hardware.Sensor;

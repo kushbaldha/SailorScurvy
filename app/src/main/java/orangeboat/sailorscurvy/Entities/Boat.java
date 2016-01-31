@@ -1,9 +1,13 @@
-package orangeboat.sailorscurvy;
+package orangeboat.sailorscurvy.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import orangeboat.sailorscurvy.Threads.Animation;
+import orangeboat.sailorscurvy.Display;
+import orangeboat.sailorscurvy.Input.SensorData;
 
 /**
  * Created by Kush on 1/29/2016.

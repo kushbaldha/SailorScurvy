@@ -1,4 +1,4 @@
-package orangeboat.sailorscurvy;
+package orangeboat.sailorscurvy.Threads;
 
 /**
  * Created by Kush on 1/29/2016.

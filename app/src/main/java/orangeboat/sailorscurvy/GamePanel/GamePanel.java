@@ -1,7 +1,9 @@
-package orangeboat.sailorscurvy;
+package orangeboat.sailorscurvy.GamePanel;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import orangeboat.sailorscurvy.Entities.Boat;
 
 /**
  * Created by Kush on 1/29/2016.
