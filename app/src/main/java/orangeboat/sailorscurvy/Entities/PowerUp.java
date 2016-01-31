@@ -1,6 +1,7 @@
 package orangeboat.sailorscurvy.Entities;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 /**
  * Created by Jay on 1/30/2016.
@@ -12,4 +13,7 @@ public class PowerUp extends Item {
         super(img, x, y);
         this.type = type;
     }
+    public void load(){}
+    public void draw(Canvas canvas){}
+    public void update(){}
 }

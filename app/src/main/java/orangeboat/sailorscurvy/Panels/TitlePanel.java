@@ -1,4 +1,4 @@
-package orangeboat.sailorscurvy.NonGamePanel;
+package orangeboat.sailorscurvy.Panels;
 
 import android.graphics.Canvas;
 

@@ -68,8 +68,8 @@ public class Boat extends Entity
     }
     public void load()
     {
-        int width = 250;
-        int height = 300;
+        int width = boatForwardImg.getWidth()/4;
+        int height = boatForwardImg.getHeight();
         for(int i = 0; i < boatForwardFrames.length;i++)
         {
             boatForwardFrames[i] = Bitmap.createBitmap(boatForwardImg,i*width,0,width,height);

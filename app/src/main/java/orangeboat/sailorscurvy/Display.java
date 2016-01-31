@@ -1,6 +1,7 @@
 package orangeboat.sailorscurvy;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import orangeboat.sailorscurvy.Input.SensorData;
+import orangeboat.sailorscurvy.Panels.GamePanel;
 import orangeboat.sailorscurvy.Threads.MainThread;
 
 /**
@@ -41,7 +43,10 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         sensor = d;
         x = displayMetrics.widthPixels;
         //y = displayMetrics.heightPixels;
-        gamePanel = new GamePanel(BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),
+        Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+                R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth()/2,
+                BitmapFactory.decodeResource(getResources(), R.drawable.orange).getHeight()/2,true);
+        gamePanel = new GamePanel(orange, BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),
                 BitmapFactory.decodeResource(getResources(),
                         R.drawable.boatleft),BitmapFactory.decodeResource(getResources(), R.drawable.boatright), x);
     }
