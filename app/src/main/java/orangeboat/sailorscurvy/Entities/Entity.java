@@ -10,7 +10,6 @@ import android.graphics.Rect;
 public class Entity
 {
     Rect hitbox;
-
     int TH;
     int TW;
     int x;
@@ -19,7 +18,7 @@ public class Entity
     {
         this.x = x;
         this.y = y;
-        TW = img.getWidth();
+        TW = img.getWidth()/4;
         TH = img.getHeight();
         hitbox = new Rect(x,y,x+TW,y+TH);
     }
@@ -28,7 +27,7 @@ public class Entity
     }
     public void update()
     {
-
+        hitbox.set(x,y,x+TW,y+TH);
     }
     public void load(Bitmap img)
     {

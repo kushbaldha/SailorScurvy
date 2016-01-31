@@ -18,6 +18,7 @@ public class Citrus extends Item {
     }
     public void draw(Canvas canvas){
         canvas.drawBitmap(itemAnimation.getImage(), x, y, null);
+     //   canvas.drawRect(hitbox, paint);
     }
     public void update(){
         super.update();

@@ -25,6 +25,7 @@ public class Boat extends Entity
     Animation boatLeft;
     Animation boatRight;
     Paint paint;
+    Paint p2 = new Paint();
     int midline;
     int limit;
     public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y, int limit)
@@ -40,28 +41,27 @@ public class Boat extends Entity
         this.boatRight = new Animation();
         paint = new Paint();
         paint.setColor(Color.BLUE);
+        p2.setColor(Color.WHITE);
         sensitivity = 20;
     }
     public void update()
     {
+
         dx = (int)(SensorData.lastX* sensitivity);
         if(dx<2 && dx>-2) {
             dx = 0;
-            //midline code
-            /*
-            if(x < midline-2){
-               x += 10;
-            }
-            else if(x > midline+2){
-                x -= 10;
-            }
+            /*midline code
+            if(x < midline-2){   x += 10; }
+            else if(x > midline+2){  x -= 10; }
             */
-            //midline code
         }
         if((x > 0 && dx > 0) || (dx < 0 && x < limit-boatRightImg.getWidth()/4) ) {
             //adds edges of the screen
             x -= dx;
         }
+        super.update();
+        hitbox.set(hitbox.left + boatForwardImg.getWidth()/16, hitbox.top,
+                hitbox.right - boatForwardImg.getWidth()/16, hitbox.bottom - boatForwardImg.getHeight()/4);
         boatForward.update();
         boatLeft.update();
         boatRight.update();
@@ -95,6 +95,6 @@ public class Boat extends Entity
         else {
             canvas.drawBitmap(boatForward.getImage(), x, y, null);
         }
-
+      //  canvas.drawRect(hitbox, p2);
     }
 }

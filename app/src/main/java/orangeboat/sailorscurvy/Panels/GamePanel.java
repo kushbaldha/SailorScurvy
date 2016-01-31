@@ -30,7 +30,7 @@ public class GamePanel
     }
     public void update()
     {
-    boat.update();
+        boat.update();
         orange.update();
     }
 }
