@@ -21,7 +21,7 @@ public class Citrus extends Item {
      //   canvas.drawRect(hitbox, paint);
     }
     public void update(int x){
-        y+= (x+hitbox.top)*.04;
+        y+= (x+hitbox.top)*.035;
         super.update();
     }
     public void resetX(int x){

@@ -35,7 +35,7 @@ public class GamePanel
     {
         boat.draw(canvas);
         orange.draw(canvas);
-        canvas.drawText("" + count, 0, 0, paint);
+        canvas.drawText("" + count, 0, 100, paint);
     }
     public void update()
     {

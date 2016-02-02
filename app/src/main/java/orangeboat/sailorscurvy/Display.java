@@ -94,7 +94,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         paint.setColor(Color.RED);
         paint.setTextSize(200f);
         gamePanel.draw(canvas);
-        canvas.drawText("" + SensorData.lastX, 100, 300, paint);
+        canvas.drawText("" + SensorData.lastX, 150, 300, paint);
        // canvas.drawText("" + (SensorData.lastX*15), 100, 500, paint);
     }
 }
