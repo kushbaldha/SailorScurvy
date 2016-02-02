@@ -9,7 +9,7 @@ import android.graphics.Rect;
  */
 public class Entity
 {
-    Rect hitbox;
+    public Rect hitbox;
     int TH;
     int TW;
     int x;
