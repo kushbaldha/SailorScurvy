@@ -16,7 +16,8 @@ public class GamePanel
     Boat boat;
     Citrus orange;
     int x;
-    int count = 0;
+    public int score = 0;
+    int highScore;
     Paint paint = new Paint();
     public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3, int x)
     {
@@ -35,18 +36,25 @@ public class GamePanel
     {
         boat.draw(canvas);
         orange.draw(canvas);
-        canvas.drawText("" + count, 0, 100, paint);
+        canvas.drawText("" + score, 0, 100, paint);
+        canvas.drawText("High Score:" + highScore, 0, 500,paint);
     }
     public void update()
     {
         if(boat.hitbox.intersect(orange.hitbox)){
             orange.resetX((int) (Math.random() * (x-200)));
-            count++;
+            score++;
+            if(score>highScore)
+                setHighScore(score);
         }
         boat.update();
         orange.update(x);
         if(orange.hitbox.bottom >= 1800){
             orange.resetX((int)(Math.random()*(x-200)));
         }
+    }
+    public void setHighScore(int num)
+    {
+        highScore = num;
     }
 }

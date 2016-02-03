@@ -1,5 +1,7 @@
 package orangeboat.sailorscurvy;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -12,6 +14,7 @@ import orangeboat.sailorscurvy.Input.SensorData;
 
 public class MainActivity extends AppCompatActivity{
     SensorData sensor;
+    Display display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,12 @@ public class MainActivity extends AppCompatActivity{
                         .setAction("Action", null).show();
             }
         });*/
-
-        setContentView(new Display(this, displayMetrics, sensor));
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        int highScore = sharedPref.getInt("high score",0);
+        System.out.println(highScore);
+        display = new Display(this, displayMetrics, sensor);
+        display.gamePanel.setHighScore(highScore);
+        setContentView(display);
     }
 
     @Override
@@ -73,5 +80,17 @@ public class MainActivity extends AppCompatActivity{
     {
         sensor.register();
         super.onResume();
+    }
+    @Override
+    public void onStop()
+    {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int newHighScore = display.gamePanel.score; // you can have some getHighscore thing here
+        editor.putInt("high score", newHighScore);
+        editor.commit();
+        System.out.println("dead");
+        System.out.println(newHighScore);
+        super.onStop();
     }
 }

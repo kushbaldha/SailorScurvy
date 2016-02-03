@@ -1,6 +1,7 @@
 package orangeboat.sailorscurvy;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -44,11 +45,12 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         x = displayMetrics.widthPixels;
         //y = displayMetrics.heightPixels;
         Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
-                R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth()/2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.orange).getHeight()/2,true);
+                        R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth() / 2,
+                BitmapFactory.decodeResource(getResources(), R.drawable.orange).getHeight() / 2, true);
         gamePanel = new GamePanel(orange, BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),
                 BitmapFactory.decodeResource(getResources(),
                         R.drawable.boatleft),BitmapFactory.decodeResource(getResources(), R.drawable.boatright), x);
+
     }
     public boolean onTouchEvent(MotionEvent event){
         //
@@ -59,6 +61,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         gamePanel.load();
         mainThread.setRunning(true);
         mainThread.start();
+
     }
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
