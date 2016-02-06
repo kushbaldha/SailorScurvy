@@ -23,11 +23,10 @@ import orangeboat.sailorscurvy.Threads.MainThread;
 public class Display extends SurfaceView implements SurfaceHolder.Callback
 {
     MainThread mainThread;
-
+    SurfaceHolder contextHolder;
     Paint paint;
     public static DisplayMetrics displayMetrics;
     GamePanel gamePanel;
-
     SensorData sensor;
     int x;
     int y;
@@ -37,6 +36,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     public Display(Context context, DisplayMetrics m, SensorData d) {
         super(context);
         getHolder().addCallback(this);
+        contextHolder= getHolder();
         mainThread = new MainThread(getHolder(),this);
         paint = new Paint();
         paint.setColor(Color.BLUE);
@@ -59,8 +59,13 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         gamePanel.load();
+        Thread.State state = mainThread.getState();
+        if(state == Thread.State.TERMINATED) {
+            newThread();
+        }
+        //once surface is created, we can safely start gameloop
         mainThread.setRunning(true);
-        mainThread.start();
+         mainThread.start();
 
     }
     @Override
@@ -99,5 +104,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         gamePanel.draw(canvas);
         canvas.drawText("" + SensorData.lastX, 150, 300, paint);
        // canvas.drawText("" + (SensorData.lastX*15), 100, 500, paint);
+    }
+    public void newThread() {
+        mainThread = new MainThread(contextHolder, this);
     }
 }

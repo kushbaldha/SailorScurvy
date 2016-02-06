@@ -17,7 +17,7 @@ public class GamePanel
     Citrus orange;
     int x;
     public int score = 0;
-    int highScore;
+    public int highScore = score;
     Paint paint = new Paint();
     public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3, int x)
     {

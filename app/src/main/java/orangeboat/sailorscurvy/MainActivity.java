@@ -72,25 +72,29 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onPause()
     {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int newHighScore = display.gamePanel.highScore; // you can have some getHighscore thing here
+        editor.putInt("high score", newHighScore);
+        editor.commit();
+        System.out.println("dead");
+        System.out.println(newHighScore);
         sensor.unregister();
         super.onPause();
     }
     @Override
     public void onResume()
     {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        int highScore = sharedPref.getInt("high score",0);
+        System.out.println(highScore);
+        display.gamePanel.setHighScore(highScore);
         sensor.register();
         super.onResume();
     }
     @Override
     public void onStop()
     {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        int newHighScore = display.gamePanel.score; // you can have some getHighscore thing here
-        editor.putInt("high score", newHighScore);
-        editor.commit();
-        System.out.println("dead");
-        System.out.println(newHighScore);
         super.onStop();
     }
 }
