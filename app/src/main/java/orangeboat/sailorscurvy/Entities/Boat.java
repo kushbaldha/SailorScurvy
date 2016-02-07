@@ -27,7 +27,6 @@ public class Boat extends Entity
     Animation boatLeft;
     Animation boatRight;
     Animation wake;
-    Paint paint;
     Paint p2 = new Paint();
     int midline;
     int limit;
@@ -44,8 +43,6 @@ public class Boat extends Entity
         this.boatLeft = new Animation();
         this.boatRight = new Animation();
         this.wake = new Animation();
-        paint = new Paint();
-        paint.setColor(Color.BLUE);
         p2.setColor(Color.WHITE);
         sensitivity = 20;
     }
@@ -99,7 +96,6 @@ public class Boat extends Entity
     }
     public void draw(Canvas canvas)
     {
-        canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint);
         canvas.drawBitmap(wake.getImage(),x-10,y,null);
         if(SensorData.lastX < -0.5f){
             canvas.drawBitmap(boatRight.getImage(), x, y, null);
