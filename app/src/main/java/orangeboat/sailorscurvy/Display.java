@@ -47,9 +47,12 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth() / 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.orange).getHeight() / 2, true);
+        Bitmap wake = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+                        R.drawable.wake), BitmapFactory.decodeResource(getResources(), R.drawable.wake).getWidth()*2,
+                BitmapFactory.decodeResource(getResources(), R.drawable.wake).getHeight()* 2, true);
         gamePanel = new GamePanel(orange, BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),
                 BitmapFactory.decodeResource(getResources(),
-                        R.drawable.boatleft),BitmapFactory.decodeResource(getResources(), R.drawable.boatright), x);
+                        R.drawable.boatleft),BitmapFactory.decodeResource(getResources(), R.drawable.boatright),wake,  x);
 
     }
     public boolean onTouchEvent(MotionEvent event){

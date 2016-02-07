@@ -19,11 +19,11 @@ public class GamePanel
     public int score = 0;
     public int highScore = score;
     Paint paint = new Paint();
-    public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3, int x)
+    public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3,Bitmap wake, int x)
     {
         this.x = x;
         this.orange = new Citrus(orange, (int)(Math.random()*(x-200)), 0, 3);
-        boat = new Boat(img, img2, img3, 500,1000, x);
+        boat = new Boat(img, img2, img3, 500,1000, wake, x);
         paint.setColor(Color.WHITE);
         paint.setTextSize(100f);
     }

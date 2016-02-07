@@ -18,27 +18,32 @@ public class Boat extends Entity
     Bitmap boatForwardImg;
     Bitmap boatRightImg;
     Bitmap boatLeftImg;
+    Bitmap wakeImg;
     Bitmap [] boatForwardFrames = new Bitmap[4];
     Bitmap [] boatLeftFrames = new Bitmap[4];
     Bitmap [] boatRightFrames = new Bitmap[4];
+    Bitmap [] wakeFrames = new Bitmap[4];
     Animation boatForward;
     Animation boatLeft;
     Animation boatRight;
+    Animation wake;
     Paint paint;
     Paint p2 = new Paint();
     int midline;
     int limit;
-    public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y, int limit)
+    public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y,Bitmap wake, int limit)
     {
         super(boatForward, x, y);
         this.limit = limit;
         this.boatForwardImg = boatForward;
         this.boatLeftImg = boatleft;
         this.boatRightImg = boatright;
+        this.wakeImg = wake;
         midline = limit/2 - boatRightImg.getWidth()/8;
         this.boatForward = new Animation();
         this.boatLeft = new Animation();
         this.boatRight = new Animation();
+        this.wake = new Animation();
         paint = new Paint();
         paint.setColor(Color.BLUE);
         p2.setColor(Color.WHITE);
@@ -60,11 +65,12 @@ public class Boat extends Entity
             x -= dx;
         }
         super.update();
-        hitbox.set(hitbox.left + boatForwardImg.getWidth()/16, hitbox.top,
-                hitbox.right - boatForwardImg.getWidth()/16, hitbox.bottom - boatForwardImg.getHeight()/4);
+        hitbox.set(hitbox.left + boatForwardImg.getWidth() / 16, hitbox.top,
+                hitbox.right - boatForwardImg.getWidth() / 16, hitbox.bottom - boatForwardImg.getHeight() / 4);
         boatForward.update();
         boatLeft.update();
         boatRight.update();
+        wake.update();
     }
     public void load()
     {
@@ -76,6 +82,14 @@ public class Boat extends Entity
             boatRightFrames[i] = Bitmap.createBitmap(boatRightImg, i*width, 0, width, height);
             boatLeftFrames[i] = Bitmap.createBitmap(boatLeftImg, i*width, 0, width, height);
         }
+        width = wakeImg.getWidth()/4;
+        height = wakeImg.getHeight();
+        for(int i = 0; i < wakeFrames.length;i++)
+        {
+            wakeFrames[i] = Bitmap.createBitmap(wakeImg,i*width,0,width,height);
+        }
+        wake.setFrames(wakeFrames);
+        wake.setDelay(60);
         boatForward.setFrames(boatForwardFrames);
         boatForward.setDelay(60);
         boatRight.setFrames(boatRightFrames);
@@ -86,6 +100,7 @@ public class Boat extends Entity
     public void draw(Canvas canvas)
     {
         canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint);
+        canvas.drawBitmap(wake.getImage(),x-10,y,null);
         if(SensorData.lastX < -0.5f){
             canvas.drawBitmap(boatRight.getImage(), x, y, null);
         }
@@ -95,6 +110,7 @@ public class Boat extends Entity
         else {
             canvas.drawBitmap(boatForward.getImage(), x, y, null);
         }
+
       //  canvas.drawRect(hitbox, p2);
     }
 }
