@@ -11,18 +11,19 @@ public class Animation {
     private long startTime;
     private long delay;
     private boolean playedOnce;
+    private int numFrames;
 
     public void setFrames(Bitmap[] frames)
     {
         this.frames = frames;
         currentFrame = 0;
+        numFrames = frames.length;
         startTime = System.nanoTime();
     }
     public void setDelay(long d){delay = d;}
     public void setFrame(int i){currentFrame= i;}
     public void setPlayedOnce(boolean b) {playedOnce = b;}
-
-
+    public void setRandomFrame(){currentFrame = (int)(Math.random()*numFrames);}
     public void update()
     {
         long elapsed = (System.nanoTime()-startTime)/1000000;

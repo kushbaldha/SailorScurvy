@@ -51,7 +51,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
                         R.drawable.wake), BitmapFactory.decodeResource(getResources(), R.drawable.wake).getWidth()*2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.wake).getHeight()* 2, true);
         Bitmap water = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
-                        R.drawable.water3), BitmapFactory.decodeResource(getResources(), R.drawable.water3).getWidth()*2,
+                        R.drawable.water2), BitmapFactory.decodeResource(getResources(), R.drawable.water3).getWidth()*2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.water3).getHeight()* 2, true);
         gamePanel = new GamePanel(orange, BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),
                 BitmapFactory.decodeResource(getResources(),

@@ -24,18 +24,18 @@ public class Water {
             waterFrames[i] = Bitmap.createBitmap(waterimg,i*width,0,width,height);
         }
         water.setFrames(waterFrames);
-        water.setDelay(60);
+        water.setDelay(110);
     }
     public void update(){
         water.update();
     }
     public void draw(Canvas canvas){
-        for(int x= 0; x < Display.displayMetrics.widthPixels; x+=waterimg.getWidth()/10){
-            for(int y= 0; y < Display.displayMetrics.heightPixels; y+=waterimg.getHeight()) {
+        for(int x = 0; x < Display.displayMetrics.widthPixels; x+=waterimg.getWidth()/10) {
+            water.setRandomFrame();
+            for (int y = 0; y < Display.displayMetrics.heightPixels; y += waterimg.getHeight()) {
                 canvas.drawBitmap(water.getImage(), x, y, null);
             }
         }
-        canvas.drawBitmap(water.getImage(),0,0,null);
     }
 
 }
