@@ -31,10 +31,11 @@ public class Water {
     }
     public void draw(Canvas canvas){
         for(int x= 0; x < Display.displayMetrics.widthPixels; x+=waterimg.getWidth()/10){
-            for(int y= 0; y < Display.displayMetrics.heightPixels; x+=waterimg.getHeight()) {
+            for(int y= 0; y < Display.displayMetrics.heightPixels; y+=waterimg.getHeight()) {
                 canvas.drawBitmap(water.getImage(), x, y, null);
             }
         }
+        canvas.drawBitmap(water.getImage(),0,0,null);
     }
 
 }

@@ -43,7 +43,7 @@ public class GamePanel
     public void draw(Canvas canvas)
     {
         canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint2);
-       // water.draw(canvas);
+        water.draw(canvas);
         boat.draw(canvas);
         orange.draw(canvas);
         canvas.drawText("" + score, 0, 100, paint);
