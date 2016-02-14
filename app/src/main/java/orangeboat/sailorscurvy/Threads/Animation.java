@@ -23,7 +23,10 @@ public class Animation {
     public void setDelay(long d){delay = d;}
     public void setFrame(int i){currentFrame= i;}
     public void setPlayedOnce(boolean b) {playedOnce = b;}
-    public void setRandomFrame(){currentFrame = (int)(Math.random()*numFrames);}
+    public void setRandomFrame(){
+        //currentFrame = (int)(Math.random()*numFrames);
+        currentFrame = (currentFrame+1)%numFrames;
+    }
     public void update()
     {
         long elapsed = (System.nanoTime()-startTime)/1000000;

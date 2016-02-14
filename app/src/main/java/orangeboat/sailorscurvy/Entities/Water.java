@@ -24,14 +24,14 @@ public class Water {
             waterFrames[i] = Bitmap.createBitmap(waterimg,i*width,0,width,height);
         }
         water.setFrames(waterFrames);
-        water.setDelay(110);
+        water.setDelay(80);
     }
     public void update(){
         water.update();
     }
     public void draw(Canvas canvas){
         for(int x = 0; x < Display.displayMetrics.widthPixels; x+=waterimg.getWidth()/10) {
-            water.setRandomFrame();
+            if(x/(waterimg.getWidth()/10)%2 == 1) water.setRandomFrame();
             for (int y = 0; y < Display.displayMetrics.heightPixels; y += waterimg.getHeight()) {
                 canvas.drawBitmap(water.getImage(), x, y, null);
             }
