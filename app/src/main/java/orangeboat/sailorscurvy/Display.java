@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import orangeboat.sailorscurvy.Input.IMGLoader;
+import orangeboat.sailorscurvy.Input.SFXLoader;
 import orangeboat.sailorscurvy.Input.SensorData;
 import orangeboat.sailorscurvy.Panels.GamePanel;
 import orangeboat.sailorscurvy.Threads.MainThread;
@@ -27,6 +28,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     GamePanel gamePanel;
     SensorData sensor;
     IMGLoader imageLoader;
+    SFXLoader sfx;
     int x;
     int y;
     int dx = 50;
@@ -43,7 +45,9 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         sensor = d;
         x = displayMetrics.widthPixels;
         //y = displayMetrics.heightPixels;
-        imageLoader = new IMGLoader(getResources(), m);
+        gamePanel = new GamePanel(x);
+        imageLoader = new IMGLoader(getResources(), m, gamePanel);
+        sfx = new SFXLoader(this.getContext(), gamePanel);
         /*Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth() / 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.orange).getHeight() / 2, true);
@@ -53,7 +57,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         Bitmap water = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.water2), BitmapFactory.decodeResource(getResources(), R.drawable.water3).getWidth()*2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.water3).getHeight()* 2, true);*/
-        gamePanel = imageLoader.getGamePanel();
+        //gamePanel = imageLoader.getGamePanel();
     }
     public boolean onTouchEvent(MotionEvent event){
         //

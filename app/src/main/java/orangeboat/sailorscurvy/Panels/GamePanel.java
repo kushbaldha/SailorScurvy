@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
+
+import java.util.ArrayList;
 
 import orangeboat.sailorscurvy.Display;
 import orangeboat.sailorscurvy.Entities.Boat;
@@ -15,14 +18,25 @@ import orangeboat.sailorscurvy.Entities.Water;
  */
 public class GamePanel
 {
+    ArrayList <Bitmap> loader = new ArrayList<>();
+    ArrayList<MediaPlayer> sfxloader = new ArrayList<>();
     Boat boat;
     Citrus orange;
     Water water;
     int x;
+    int sfxstart = 0;
     public int score = 0;
     public int highScore = score;
     Paint paint = new Paint();
     Paint paint2 = new Paint();
+    public GamePanel(int x){
+        this.x = x;
+        paint2 = new Paint();
+        paint2.setColor(Color.rgb(31, 123, 237));
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(100f);
+    }
+    /*
     public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3,Bitmap wake,Bitmap water, int x)
     {
         this.x = x;
@@ -34,8 +48,16 @@ public class GamePanel
         paint.setColor(Color.WHITE);
         paint.setTextSize(100f);
     }
+    */
     public void load()
     {
+        //orange, wake, boat, boat, boat, water lemon lime magnet shield white black barrel
+        //boat beep errg
+        sfxloader.get(0).seekTo(sfxstart);
+        sfxloader.get(2).start();
+        orange = new Citrus(loader.get(0), (int)(Math.random()*(x-200)), 0, 3);
+        boat = new Boat(loader.get(2), loader.get(3), loader.get(4), 500,1000, loader.get(1), x);
+        water = new Water(loader.get(5));
         boat.load();
         orange.load();
         water.load();
@@ -55,7 +77,23 @@ public class GamePanel
         if(boat.hitbox.intersect(orange.hitbox)){
             orange.resetX((int) (Math.random() * (x-200)));
             score++;
-            if(score>highScore)
+            /*
+            if(score > 10){
+                if(score > 20){
+                    sfxstart= sfxloader.get(1).getCurrentPosition();
+                    sfxloader.get(1).pause();
+                    sfxloader.get(2).seekTo(sfxstart);
+                    sfxloader.get(2).start();
+                }
+                else{
+                    sfxstart= sfxloader.get(0).getCurrentPosition();
+                    sfxloader.get(0).pause();
+                    sfxloader.get(1).seekTo(sfxstart);
+                    sfxloader.get(1).start();
+                }
+            }
+            */
+            if (score > highScore)
                 setHighScore(score);
         }
         boat.update();
@@ -68,4 +106,6 @@ public class GamePanel
     {
         highScore = num;
     }
+    public void imgLoad(Bitmap image) {loader.add(image);}
+    public void sfxLoad(MediaPlayer sfx){ sfxloader.add(sfx);}
 }

@@ -24,7 +24,7 @@ public class Water {
             waterFrames[i] = Bitmap.createBitmap(waterimg,i*width,0,width,height);
         }
         water.setFrames(waterFrames);
-        water.setDelay(80);
+        water.setDelay(60);
     }
     public void update(){
         water.update();
