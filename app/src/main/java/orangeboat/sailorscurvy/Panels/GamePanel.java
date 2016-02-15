@@ -30,7 +30,7 @@ public class GamePanel
         boat = new Boat(img, img2, img3, 500,1000, wake, x);
         this.water = new Water(water);
         paint2 = new Paint();
-        paint2.setColor(Color.BLUE);
+        paint2.setColor(Color.rgb(31,123,237));
         paint.setColor(Color.WHITE);
         paint.setTextSize(100f);
     }

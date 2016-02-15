@@ -1,9 +1,6 @@
 package orangeboat.sailorscurvy;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import orangeboat.sailorscurvy.Input.IMGLoader;
 import orangeboat.sailorscurvy.Input.SensorData;
 import orangeboat.sailorscurvy.Panels.GamePanel;
 import orangeboat.sailorscurvy.Threads.MainThread;
@@ -28,6 +26,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     public static DisplayMetrics displayMetrics;
     GamePanel gamePanel;
     SensorData sensor;
+    IMGLoader imageLoader;
     int x;
     int y;
     int dx = 50;
@@ -39,12 +38,13 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         contextHolder= getHolder();
         mainThread = new MainThread(getHolder(),this);
         paint = new Paint();
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.rgb(31,123,237));
         displayMetrics = m;
         sensor = d;
         x = displayMetrics.widthPixels;
         //y = displayMetrics.heightPixels;
-        Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
+        imageLoader = new IMGLoader(getResources(), m);
+        /*Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth() / 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.orange).getHeight() / 2, true);
         Bitmap wake = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
@@ -52,11 +52,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
                 BitmapFactory.decodeResource(getResources(), R.drawable.wake).getHeight()* 2, true);
         Bitmap water = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.water2), BitmapFactory.decodeResource(getResources(), R.drawable.water3).getWidth()*2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.water3).getHeight()* 2, true);
-        gamePanel = new GamePanel(orange, BitmapFactory.decodeResource(getResources(), R.drawable.boatforward),
-                BitmapFactory.decodeResource(getResources(),
-                        R.drawable.boatleft),BitmapFactory.decodeResource(getResources(), R.drawable.boatright),wake,water,  x);
-
+                BitmapFactory.decodeResource(getResources(), R.drawable.water3).getHeight()* 2, true);*/
+        gamePanel = imageLoader.getGamePanel();
     }
     public boolean onTouchEvent(MotionEvent event){
         //
