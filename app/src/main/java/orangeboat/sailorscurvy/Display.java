@@ -14,6 +14,7 @@ import orangeboat.sailorscurvy.Input.IMGLoader;
 import orangeboat.sailorscurvy.Input.SFXLoader;
 import orangeboat.sailorscurvy.Input.SensorData;
 import orangeboat.sailorscurvy.Panels.GamePanel;
+import orangeboat.sailorscurvy.Panels.TitlePanel;
 import orangeboat.sailorscurvy.Threads.MainThread;
 
 /**
@@ -26,9 +27,11 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     Paint paint;
     public static DisplayMetrics displayMetrics;
     GamePanel gamePanel;
+    TitlePanel titlePanel;
     SensorData sensor;
     IMGLoader imageLoader;
     SFXLoader sfx;
+    int panelSwitch = 0;
     int x;
     int y;
     int dx = 50;
@@ -46,7 +49,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         x = displayMetrics.widthPixels;
         //y = displayMetrics.heightPixels;
         gamePanel = new GamePanel(x);
-        imageLoader = new IMGLoader(getResources(), m, gamePanel);
+        titlePanel = new TitlePanel();
+        imageLoader = new IMGLoader(getResources(), m, gamePanel,titlePanel);
         sfx = new SFXLoader(this.getContext(), gamePanel);
         /*Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth() / 2,
@@ -65,6 +69,7 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     }
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        titlePanel.load();
         gamePanel.load();
         Thread.State state = mainThread.getState();
         if(state == Thread.State.TERMINATED) {
@@ -95,6 +100,9 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     }
     public void update()
     {
+        if(panelSwitch == 0)
+            titlePanel.update();
+        else if(panelSwitch == 1)
         gamePanel.update();
     }
 
@@ -106,11 +114,17 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         paint.setColor(Color.RED);
         canvas.drawRect(rect,paint);
         paint.setTextSize(200f);*/
-        paint.setColor(Color.RED);
-        paint.setTextSize(200f);
-        gamePanel.draw(canvas);
-        canvas.drawText("" + SensorData.lastX, 150, 300, paint);
-       // canvas.drawText("" + (SensorData.lastX*15), 100, 500, paint);
+        if(panelSwitch == 0)
+        {
+            titlePanel.draw(canvas);
+        }
+        else if(panelSwitch == 1) {
+            paint.setColor(Color.RED);
+            paint.setTextSize(200f);
+            gamePanel.draw(canvas);
+            canvas.drawText("" + SensorData.lastX, 150, 300, paint);
+            // canvas.drawText("" + (SensorData.lastX*15), 100, 500, paint);
+        }
     }
     public void newThread() {
         mainThread = new MainThread(contextHolder, this);

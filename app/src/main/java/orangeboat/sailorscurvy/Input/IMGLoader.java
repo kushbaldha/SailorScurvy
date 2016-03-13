@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 
+import orangeboat.sailorscurvy.Display;
 import orangeboat.sailorscurvy.Panels.GamePanel;
 import orangeboat.sailorscurvy.Panels.TitlePanel;
 import orangeboat.sailorscurvy.R;
@@ -18,9 +19,11 @@ public class IMGLoader
     Resources resources;
     DisplayMetrics displayMetrics;
     GamePanel g;
-    public IMGLoader(Resources resources, DisplayMetrics m, GamePanel gamePanel)
+    TitlePanel t;
+    public IMGLoader(Resources resources, DisplayMetrics m, GamePanel gamePanel,TitlePanel titlePanel)
     {
         g = gamePanel;
+        t = titlePanel;
         this.resources = resources;
         displayMetrics = m;
         start();
@@ -52,6 +55,11 @@ public class IMGLoader
         g.imgLoad(temp);
         temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.barrel), BitmapFactory.decodeResource(resources, R.drawable.barrel).getWidth(), BitmapFactory.decodeResource(resources, R.drawable.barrel).getHeight(), true);
         g.imgLoad(temp);
+
+
+
+        temp = BitmapFactory.decodeResource(resources,R.drawable.sailor);
+        t.imgLoad(temp);
     }
     /*
     public GamePanel getGamePanel()
