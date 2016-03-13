@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import java.util.ArrayList;
 
 import orangeboat.sailorscurvy.Display;
+import orangeboat.sailorscurvy.Entities.Barrel;
 import orangeboat.sailorscurvy.Entities.Boat;
 import orangeboat.sailorscurvy.Entities.Citrus;
 import orangeboat.sailorscurvy.Entities.Water;
@@ -18,8 +19,10 @@ import orangeboat.sailorscurvy.Entities.Water;
  */
 public class GamePanel
 {
+    int usedForBarrel;
     ArrayList <Bitmap> loader = new ArrayList<>();
     ArrayList<MediaPlayer> sfxloader = new ArrayList<>();
+    Barrel barrel;
     Boat boat;
     Citrus orange;
     Water water;
@@ -58,9 +61,15 @@ public class GamePanel
         orange = new Citrus(loader.get(0), (int)(Math.random()*(x-200)), 0, 3);
         boat = new Boat(loader.get(2), loader.get(3), loader.get(4), 500,1000, loader.get(1), x);
         water = new Water(loader.get(5));
+
+        usedForBarrel = barrelRoll(orange.hitbox.left);
+
+        barrel = new Barrel(loader.get(12), usedForBarrel, 0);
+
         boat.load();
         orange.load();
         water.load();
+        barrel.load();
     }
     public void draw(Canvas canvas)
     {
@@ -68,8 +77,13 @@ public class GamePanel
         water.draw(canvas);
         boat.draw(canvas);
         orange.draw(canvas);
+        barrel.draw(canvas);
         canvas.drawText("" + score, 0, 100, paint);
         canvas.drawText("High Score:" + highScore, 0, 500, paint);
+        if(boat.hitbox.intersect(barrel.hitbox)){
+            canvas.drawText("you lost tbh fam", 0,1000, paint);
+
+        }
     }
     public void update()
     {
@@ -98,8 +112,13 @@ public class GamePanel
         }
         boat.update();
         orange.update(x);
-        if(orange.hitbox.bottom >= 1800){
+        barrel.update(x);
+        if (orange.hitbox.bottom >= 1800){
             orange.resetX((int)(Math.random()*(x-200)));
+
+        }
+        if(barrel.hitbox.bottom >= 1900){
+            barrel.resetX(((int)(Math.random()*(x-200))));
         }
     }
     public void setHighScore(int num)
@@ -108,4 +127,14 @@ public class GamePanel
     }
     public void imgLoad(Bitmap image) {loader.add(image);}
     public void sfxLoad(MediaPlayer sfx){ sfxloader.add(sfx);}
+    public int barrelRoll(int anythingbut){
+        int temp = (int)(Math.random()*(x-200));
+        boolean flag = true;
+        for(;flag;) {
+            if (Math.abs(anythingbut - temp) > 100) {
+                flag = false;
+            }
+        }
+            return temp;
+    }
 }
