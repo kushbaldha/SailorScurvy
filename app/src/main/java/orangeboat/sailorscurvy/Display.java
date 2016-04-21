@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import orangeboat.sailorscurvy.Input.IMGLoader;
 import orangeboat.sailorscurvy.Input.SFXLoader;
 import orangeboat.sailorscurvy.Input.SensorData;
+import orangeboat.sailorscurvy.Input.TouchEvents;
 import orangeboat.sailorscurvy.Panels.GamePanel;
 import orangeboat.sailorscurvy.Panels.TitlePanel;
 import orangeboat.sailorscurvy.Threads.MainThread;
@@ -22,6 +23,7 @@ import orangeboat.sailorscurvy.Threads.MainThread;
  */
 public class Display extends SurfaceView implements SurfaceHolder.Callback
 {
+    TouchEvents touch;
     MainThread mainThread;
     SurfaceHolder contextHolder;
     Paint paint;
@@ -63,10 +65,6 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
                 BitmapFactory.decodeResource(getResources(), R.drawable.water3).getHeight()* 2, true);*/
         //gamePanel = imageLoader.getGamePanel();
     }
-    public boolean onTouchEvent(MotionEvent event){
-        //
-        return true;
-    }
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         titlePanel.load();
@@ -105,7 +103,14 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         else if(panelSwitch == 1)
         gamePanel.update();
     }
-
+    public boolean onTouchEvent(MotionEvent event) {
+        touch = new TouchEvents(event);
+        if(panelSwitch == 0){
+            touch.checkForPlayPress(titlePanel);
+            if(touch.switcher) panelSwitch = 1;
+        }
+        return true;
+    }
     @Override
     public void draw(Canvas canvas)
     {

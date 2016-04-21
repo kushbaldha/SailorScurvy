@@ -32,12 +32,14 @@ public class GamePanel
     public int highScore = score;
     Paint paint = new Paint();
     Paint paint2 = new Paint();
+    Paint paint3 = new Paint();
     public GamePanel(int x){
         this.x = x;
         paint2 = new Paint();
         paint2.setColor(Color.rgb(31, 123, 237));
         paint.setColor(Color.WHITE);
         paint.setTextSize(100f);
+        paint3.setColor(Color.BLACK);
     }
     /*
     public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3,Bitmap wake,Bitmap water, int x)
@@ -59,12 +61,12 @@ public class GamePanel
         sfxloader.get(0).seekTo(sfxstart);
         sfxloader.get(2).start();
         orange = new Citrus(loader.get(0), (int)(Math.random()*(x-200)), 0, 3);
-        boat = new Boat(loader.get(2), loader.get(3), loader.get(4), 500,1000, loader.get(1), x);
+        boat = new Boat(loader.get(2), loader.get(3), loader.get(4), 500,1000, loader.get(1), x, loader.get(13));
         water = new Water(loader.get(5));
 
-        usedForBarrel = barrelRoll(orange.hitbox.left);
+        //usedForBarrel = barrelRoll(orange.hitbox.left);
 
-        barrel = new Barrel(loader.get(12), usedForBarrel, 0);
+        barrel = new Barrel(loader.get(12), (int)(Math.random()*(x-200)), 0);
 
         boat.load();
         orange.load();
@@ -74,19 +76,29 @@ public class GamePanel
     public void draw(Canvas canvas)
     {
         canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint2);
+        if(boat.hitbox.intersect(barrel.hitbox)){
+            if(boat.boatexplosion.playedOnce()){
+                canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint3);
+                return;
+            }
+            canvas.drawText("you lost tbh fam", 0,1000, paint);
+            boat.drawDeath(canvas);
+            return;
+        }
         water.draw(canvas);
-        boat.draw(canvas);
         orange.draw(canvas);
         barrel.draw(canvas);
+        boat.draw(canvas);
         canvas.drawText("" + score, 0, 100, paint);
         canvas.drawText("High Score:" + highScore, 0, 500, paint);
-        if(boat.hitbox.intersect(barrel.hitbox)){
-            canvas.drawText("you lost tbh fam", 0,1000, paint);
 
-        }
     }
     public void update()
     {
+        if(boat.hitbox.intersect(barrel.hitbox)){
+            boat.updateDeath();
+            return;
+        }
         water.update();
         if(boat.hitbox.intersect(orange.hitbox)){
             orange.resetX((int) (Math.random() * (x-200)));

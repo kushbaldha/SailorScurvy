@@ -19,18 +19,21 @@ public class Boat extends Entity
     Bitmap boatRightImg;
     Bitmap boatLeftImg;
     Bitmap wakeImg;
+    Bitmap explosion;
     Bitmap [] boatForwardFrames = new Bitmap[4];
     Bitmap [] boatLeftFrames = new Bitmap[4];
     Bitmap [] boatRightFrames = new Bitmap[4];
     Bitmap [] wakeFrames = new Bitmap[4];
+    Bitmap [] explosionFrames = new Bitmap[8];
     Animation boatForward;
     Animation boatLeft;
     Animation boatRight;
     Animation wake;
+    public Animation boatexplosion;
     Paint p2 = new Paint();
     int midline;
     int limit;
-    public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y,Bitmap wake, int limit)
+    public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y,Bitmap wake, int limit, Bitmap explosion)
     {
         super(boatForward, x, y);
         this.limit = limit;
@@ -38,17 +41,18 @@ public class Boat extends Entity
         this.boatLeftImg = boatleft;
         this.boatRightImg = boatright;
         this.wakeImg = wake;
+        this.explosion = explosion;
         midline = limit/2 - boatRightImg.getWidth()/8;
         this.boatForward = new Animation();
         this.boatLeft = new Animation();
         this.boatRight = new Animation();
         this.wake = new Animation();
+        this.boatexplosion = new Animation();
         p2.setColor(Color.WHITE);
         sensitivity = 20;
     }
     public void update()
     {
-
         dx = (int)(SensorData.lastX* sensitivity);
         if(dx<2 && dx>-2) {
             dx = 0;
@@ -85,6 +89,14 @@ public class Boat extends Entity
         {
             wakeFrames[i] = Bitmap.createBitmap(wakeImg,i*width,0,width,height);
         }
+        width = explosion.getWidth()/8;
+        height = explosion.getHeight();
+        for(int i = 0; i < explosionFrames.length;i++)
+        {
+            explosionFrames[i] = Bitmap.createBitmap(explosion,i*width,0,width,height);
+        }
+        boatexplosion.setFrames(explosionFrames);
+        boatexplosion.setDelay(175);
         wake.setFrames(wakeFrames);
         wake.setDelay(60);
         boatForward.setFrames(boatForwardFrames);
@@ -108,5 +120,15 @@ public class Boat extends Entity
         }
 
       //  canvas.drawRect(hitbox, p2);
+    }
+    public void updateDeath(){
+        if(!boatexplosion.playedOnce()) {
+            boatexplosion.update();
+        }
+    }
+    public void drawDeath(Canvas canvas)
+    {
+        canvas.drawBitmap(boatexplosion.getImage(), x, y, null);
+
     }
 }

@@ -53,12 +53,14 @@ public class IMGLoader
         g.imgLoad(temp);
         temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.black), BitmapFactory.decodeResource(resources, R.drawable.black).getWidth() , BitmapFactory.decodeResource(resources, R.drawable.black).getHeight(), true);
         g.imgLoad(temp);
-        temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.barrel), BitmapFactory.decodeResource(resources, R.drawable.barrel).getWidth(), BitmapFactory.decodeResource(resources, R.drawable.barrel).getHeight(), true);
+        temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.barrel), BitmapFactory.decodeResource(resources, R.drawable.barrel).getWidth(), BitmapFactory.decodeResource(resources, R.drawable.barrel).getHeight(), true);
+        g.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources, R.drawable.explosionboat);
         g.imgLoad(temp);
 
-
-
-        temp = BitmapFactory.decodeResource(resources,R.drawable.sailor);
+        temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.sailor), BitmapFactory.decodeResource(resources, R.drawable.sailor).getWidth()/2, BitmapFactory.decodeResource(resources, R.drawable.sailor).getHeight()/2, true);
+        t.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources,R.drawable.playbutton);
         t.imgLoad(temp);
     }
     /*
