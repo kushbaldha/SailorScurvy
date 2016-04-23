@@ -36,6 +36,7 @@ public class TitlePanel {
     public void draw(Canvas canvas){
         canvas.drawRect(0,0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint);
         canvas.drawBitmap(sailor.getImage(), 50, 50, null);
+        canvas.drawBitmap(titleWords, Display.displayMetrics.widthPixels/2-titleWords.getWidth()/2 ,(Display.displayMetrics.heightPixels/9), null);
         canvas.drawBitmap(playButton,x,y,null);
         if(touchOn) {
             canvas.drawBitmap(touch,togglex, toggley, null);
@@ -65,12 +66,12 @@ public class TitlePanel {
         }
         sailor.setFrames(sailorFrames);
         sailor.setDelay(80);
-        x = (int) (Display.displayMetrics.widthPixels/3.3);
+        x = (int) (Display.displayMetrics.widthPixels/2);
         y = (int) ( Display.displayMetrics.heightPixels/1.3);
         qx = (int) (Display.displayMetrics.widthPixels/3.3);
         qy = (int) ( Display.displayMetrics.heightPixels/1.3);
-        togglex  = (int) ( Display.displayMetrics.widthPixels/4);
-        toggley = (int) ( Display.displayMetrics.heightPixels/4);
+        togglex  = (int) ( Display.displayMetrics.widthPixels/9.5);
+        toggley = (int) ( Display.displayMetrics.heightPixels/1.35);
         rectPlay = new Rect(x,y, (x + buttonX), (y + buttonY));
         rectQuit = new Rect(qx,qy, (qx + buttonX), (qy + buttonY));
         rectToggle = new Rect(togglex, toggley, (togglex+togglewidth), (toggley+toggleheight));
