@@ -27,8 +27,9 @@ public class GamePanel
     Boat boat;
     Citrus orange;
     Water water;
-    Rect left, right;
+    public Rect left, right, pause;
     public int touchOn = 1;
+    public boolean gameEnded;
     int x;
     int sfxstart = 0;
     public int score = 0;
@@ -61,17 +62,18 @@ public class GamePanel
     */
     public void load()
     {
-        //orange, wake, boat, boat, boat, water lemon lime magnet shield white black barrel
+        gameEnded = false;
+        //orange, wake, boat, boat, boat, water lemon lime magnet shield white black barrel explosion, pause
         //boat beep errg
         sfxloader.get(0).seekTo(sfxstart);
         sfxloader.get(2).start();
+
         orange = new Citrus(loader.get(0), (int)(Math.random()*(x-200)), 0, 3);
         boat = new Boat(loader.get(2), loader.get(3), loader.get(4), 500,1000, loader.get(1), x, loader.get(13));
         water = new Water(loader.get(5));
-
         //usedForBarrel = barrelRoll(orange.hitbox.left);
-
         barrel = new Barrel(loader.get(12), (int)(Math.random()*(x-200)), 0);
+        pause = new Rect(Display.displayMetrics.widthPixels-loader.get(14).getWidth(),0, Display.displayMetrics.widthPixels, loader.get(14).getHeight());
 
         boat.load();
         orange.load();
@@ -86,6 +88,7 @@ public class GamePanel
         if(boat.hitbox.intersect(barrel.hitbox)){
             if(boat.boatexplosion.playedOnce()){
                 canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint3);
+                gameEnded = true;
                 return;
             }
             canvas.drawText("you lost tbh fam", 0,1000, paint);
@@ -101,6 +104,7 @@ public class GamePanel
         else if (touchOn == 1){
             boat.draw(canvas);
         }
+        canvas.drawBitmap(loader.get(14), Display.displayMetrics.widthPixels-loader.get(14).getWidth(), 0, null);
         canvas.drawText("" + score, 0, 100, paint);
         canvas.drawText("High Score:" + highScore, 0, 500, paint);
 

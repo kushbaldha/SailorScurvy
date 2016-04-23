@@ -14,7 +14,9 @@ import orangeboat.sailorscurvy.Input.IMGLoader;
 import orangeboat.sailorscurvy.Input.SFXLoader;
 import orangeboat.sailorscurvy.Input.SensorData;
 import orangeboat.sailorscurvy.Input.TouchEvents;
+import orangeboat.sailorscurvy.Panels.EndPanel;
 import orangeboat.sailorscurvy.Panels.GamePanel;
+import orangeboat.sailorscurvy.Panels.PausePanel;
 import orangeboat.sailorscurvy.Panels.TitlePanel;
 import orangeboat.sailorscurvy.Threads.MainThread;
 
@@ -30,6 +32,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     public static DisplayMetrics displayMetrics;
     GamePanel gamePanel;
     TitlePanel titlePanel;
+    EndPanel endPanel;
+    PausePanel pausePanel;
     SensorData sensor;
     IMGLoader imageLoader;
     SFXLoader sfx;
@@ -52,7 +56,9 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         //y = displayMetrics.heightPixels;
         gamePanel = new GamePanel(x);
         titlePanel = new TitlePanel();
-        imageLoader = new IMGLoader(getResources(), m, gamePanel,titlePanel);
+        endPanel = new EndPanel();
+        pausePanel = new PausePanel();
+        imageLoader = new IMGLoader(getResources(), m, gamePanel,titlePanel,endPanel, pausePanel);
         sfx = new SFXLoader(this.getContext(), gamePanel);
         /*Bitmap orange = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
                         R.drawable.orange), BitmapFactory.decodeResource(getResources(), R.drawable.orange).getWidth() / 2,
@@ -69,6 +75,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder) {
         titlePanel.load();
         gamePanel.load();
+        endPanel.load();
+        pausePanel.load();
         Thread.State state = mainThread.getState();
         if(state == Thread.State.TERMINATED) {
             newThread();
@@ -100,20 +108,47 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
     {
         if(panelSwitch == 0)
             titlePanel.update();
-        else if(panelSwitch == 1)
+        else if(panelSwitch == 1) {
             gamePanel.update();
+        }
+        if(gamePanel.gameEnded){
+            panelSwitch = 2;
+        }
     }
     public boolean onTouchEvent(MotionEvent event) {
         touch = new TouchEvents(event);
-        if(panelSwitch == 0){
+        if (panelSwitch == 0) {
             touch.checkTitle(titlePanel);
-            touch.titleToGameToggleInfo(gamePanel);
-            if(touch.switcher) {
+            touch.toGameToggleInfo(gamePanel,pausePanel,endPanel);
+            if (touch.switcher) {
                 panelSwitch = 1;
+                touch.switcher = false;
             }
         }
-        if(panelSwitch ==1){
+        if (panelSwitch == 1) {
             touch.checkGame(gamePanel);
+            touch.toGameToggleInfo(gamePanel, pausePanel, endPanel);
+            if (touch.switcher) {
+                panelSwitch = 3;
+                touch.switcher = false;
+            }
+        }
+        if (panelSwitch == 2) {
+            gamePanel.load();
+            touch.checkEnd(endPanel);
+            touch.toGameToggleInfo(gamePanel, pausePanel, endPanel);
+            if (touch.switcher) {
+                panelSwitch = 1;
+                touch.switcher = false;
+            }
+        }
+        if(panelSwitch == 3) {
+            touch.checkPause(pausePanel);
+            touch.toGameToggleInfo(gamePanel,pausePanel,endPanel);
+            if (touch.switcher) {
+                panelSwitch = 1;
+                touch.switcher = false;
+            }
         }
         return true;
     }
@@ -135,6 +170,12 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
             gamePanel.draw(canvas);
             canvas.drawText("" + SensorData.lastX, 150, 300, paint);
             // canvas.drawText("" + (SensorData.lastX*15), 100, 500, paint);
+        }
+        else if (panelSwitch == 2) {
+            endPanel.draw(canvas);
+        }
+        else if(panelSwitch == 3){
+            pausePanel.draw(canvas);
         }
     }
     public void newThread() {

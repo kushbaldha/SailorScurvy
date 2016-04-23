@@ -3,7 +3,9 @@ package orangeboat.sailorscurvy.Input;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 
+import orangeboat.sailorscurvy.Panels.EndPanel;
 import orangeboat.sailorscurvy.Panels.GamePanel;
+import orangeboat.sailorscurvy.Panels.PausePanel;
 import orangeboat.sailorscurvy.Panels.TitlePanel;
 
 /**
@@ -48,18 +50,65 @@ public class TouchEvents {
             }
         }
     }
-    public void titleToGameToggleInfo(GamePanel gamePanel){
+    public void toGameToggleInfo(GamePanel gamePanel, PausePanel pausePanel, EndPanel endPanel){
         if(touchtriggerOn == 2) {
             gamePanel.touchOn = 2;
+            pausePanel.toggle = 2;
+            endPanel.toggle = 2;
         }
         if(touchtriggerOn == 1){
             gamePanel.touchOn = 1;
+            pausePanel.toggle = 1;
+            endPanel.toggle = 1;
+        }
+    }
+    public void checkEnd(EndPanel endPanel){
+        int action = MotionEventCompat.getActionMasked(event);
+        if (MotionEvent.ACTION_DOWN == action) {
+            System.out.println(x + " " + y);
+            if (endPanel.rectRetry.contains(x, y)) {
+                switcher = true;
+            }
+            else if(endPanel.rectToggle.contains(x,y)){
+                System.out.println("TOGGLED");
+                if(endPanel.toggle == 2){
+                    endPanel.toggle =  1;
+                    touchtriggerOn = 1;
+                }
+                else{
+                    endPanel.toggle = 2;
+                    touchtriggerOn = 2;
+                }
+            }
+        }
+    }
+    public void checkPause(PausePanel pausePanel){
+        int action = MotionEventCompat.getActionMasked(event);
+        if (MotionEvent.ACTION_DOWN == action) {
+            System.out.println(x + " " + y);
+            if (pausePanel.rectResume.contains(x, y)) {
+                switcher = true;
+            }
+            else if(pausePanel.rectToggle.contains(x,y)){
+                System.out.println("TOGGLED");
+                if(pausePanel.toggle == 2){
+                    pausePanel.toggle = 1;
+                    touchtriggerOn = 1;
+                }
+                else{
+                    pausePanel.toggle = 2;
+                    touchtriggerOn = 2;
+                }
+            }
         }
     }
     public void checkGame(GamePanel gamePanel) {
         int action = MotionEventCompat.getActionMasked(event);
         // FIRST TOUCH
         if (MotionEvent.ACTION_DOWN == action) {
+            if (gamePanel.pause.contains(x, y)) {
+                switcher = true;
+            }
             gamePanel.downTouch(x, y, event.getPointerId(event.getActionIndex()));
           //  System.out.println(x+ " is the x coordinate " + y + " is the y coordinate");
         }
@@ -71,6 +120,9 @@ public class TouchEvents {
         // SECOND TOUCH
         if(MotionEvent.ACTION_POINTER_DOWN == action)
         {
+            if (gamePanel.pause.contains(x, y)) {
+                switcher = true;
+            }
             gamePanel.downTouch(x, y, event.getPointerId(event.getActionIndex()));
         }
         if(MotionEvent.ACTION_POINTER_UP == action) {

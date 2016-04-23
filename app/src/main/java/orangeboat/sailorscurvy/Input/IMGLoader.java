@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 
 import orangeboat.sailorscurvy.Display;
+import orangeboat.sailorscurvy.Panels.EndPanel;
 import orangeboat.sailorscurvy.Panels.GamePanel;
+import orangeboat.sailorscurvy.Panels.PausePanel;
 import orangeboat.sailorscurvy.Panels.TitlePanel;
 import orangeboat.sailorscurvy.R;
 
@@ -20,10 +22,14 @@ public class IMGLoader
     DisplayMetrics displayMetrics;
     GamePanel g;
     TitlePanel t;
-    public IMGLoader(Resources resources, DisplayMetrics m, GamePanel gamePanel,TitlePanel titlePanel)
+    EndPanel e;
+    PausePanel p;
+    public IMGLoader(Resources resources, DisplayMetrics m, GamePanel gamePanel,TitlePanel titlePanel, EndPanel endPanel, PausePanel pausePanel)
     {
         g = gamePanel;
         t = titlePanel;
+        e = endPanel;
+        p = pausePanel;
         this.resources = resources;
         displayMetrics = m;
         start();
@@ -57,6 +63,13 @@ public class IMGLoader
         g.imgLoad(temp);
         temp = BitmapFactory.decodeResource(resources, R.drawable.explosionboat);
         g.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources, R.drawable.pause);
+        g.imgLoad(temp);
+
+        temp = BitmapFactory.decodeResource(resources, R.drawable.retrybutton);
+        e.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources, R.drawable.resumebutton);
+        p.imgLoad(temp);
 
         temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.sailor), BitmapFactory.decodeResource(resources, R.drawable.sailor).getWidth() / 2, BitmapFactory.decodeResource(resources, R.drawable.sailor).getHeight() / 2, true);
         t.imgLoad(temp);
@@ -64,10 +77,16 @@ public class IMGLoader
         t.imgLoad(temp);
         temp = BitmapFactory.decodeResource(resources,R.drawable.quitbutton);
         t.imgLoad(temp);
+        e.imgLoad(temp);
+        p.imgLoad(temp);
         temp = BitmapFactory.decodeResource(resources,R.drawable.touchtoggle);
         t.imgLoad(temp);
+        e.imgLoad(temp);
+        p.imgLoad(temp);
         temp = BitmapFactory.decodeResource(resources,R.drawable.tilttoggle);
         t.imgLoad(temp);
+        e.imgLoad(temp);
+        p.imgLoad(temp);
         temp = BitmapFactory.decodeResource(resources,R.drawable.titletext);
         t.imgLoad(temp);
     }
