@@ -33,6 +33,7 @@ public class Boat extends Entity
     Paint p2 = new Paint();
     int midline;
     int limit;
+    int signal = 0; // 0-middle, 1 left, 2 is right
     public Boat(Bitmap boatForward,Bitmap boatleft, Bitmap boatright, int x, int y,Bitmap wake, int limit, Bitmap explosion)
     {
         super(boatForward, x, y);
@@ -73,6 +74,7 @@ public class Boat extends Entity
         boatRight.update();
         wake.update();
     }
+
     public void load()
     {
         int width = boatForwardImg.getWidth()/4;
@@ -131,4 +133,34 @@ public class Boat extends Entity
         canvas.drawBitmap(boatexplosion.getImage(), x, y, null);
 
     }
+    public void touchUpdate(){
+        if(signal == 2) {dx = (int)  -2.6f   *20;}
+        if(signal == 1) {dx = (int)  2.6f   *20;}
+        if(signal == 0) { dx = 0; }
+        if((x > 0 && (signal == 1) || ((signal == 2) && x < limit-boatRightImg.getWidth()/4))){
+            x -= dx;
+        }
+        super.update();
+        hitbox.set(hitbox.left + boatForwardImg.getWidth() / 16, hitbox.top,
+                hitbox.right - boatForwardImg.getWidth() / 16, hitbox.bottom - boatForwardImg.getHeight() / 4);
+        boatForward.update();
+        boatLeft.update();
+        boatRight.update();
+        wake.update();
+    }
+    public void touchDraw(Canvas canvas){
+        canvas.drawBitmap(wake.getImage(),x-10,y,null);
+        if(signal == 2){
+            canvas.drawBitmap(boatRight.getImage(), x, y, null);
+        }
+        else if(signal == 1){
+            canvas.drawBitmap(boatLeft.getImage(), x, y, null);
+        }
+        else {
+            canvas.drawBitmap(boatForward.getImage(), x, y, null);
+        }
+    }
+    public void moveRight(){ signal = 2;}
+    public void moveLeft(){ signal = 1;}
+    public void straighten(){signal = 0;}
 }

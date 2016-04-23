@@ -101,13 +101,19 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         if(panelSwitch == 0)
             titlePanel.update();
         else if(panelSwitch == 1)
-        gamePanel.update();
+            gamePanel.update();
     }
     public boolean onTouchEvent(MotionEvent event) {
         touch = new TouchEvents(event);
         if(panelSwitch == 0){
-            touch.checkForPlayPress(titlePanel);
-            if(touch.switcher) panelSwitch = 1;
+            touch.checkTitle(titlePanel);
+            touch.titleToGameToggleInfo(gamePanel);
+            if(touch.switcher) {
+                panelSwitch = 1;
+            }
+        }
+        if(panelSwitch ==1){
+            touch.checkGame(gamePanel);
         }
         return true;
     }

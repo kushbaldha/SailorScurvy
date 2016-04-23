@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class GamePanel
     Boat boat;
     Citrus orange;
     Water water;
+    Rect left, right;
+    public int touchOn = 1;
     int x;
     int sfxstart = 0;
     public int score = 0;
@@ -40,6 +43,8 @@ public class GamePanel
         paint.setColor(Color.WHITE);
         paint.setTextSize(100f);
         paint3.setColor(Color.BLACK);
+        left = new Rect(0, 0, Display.displayMetrics.widthPixels/2,Display.displayMetrics.heightPixels );
+        right = new Rect(Display.displayMetrics.widthPixels/2, 0, Display.displayMetrics.widthPixels,Display.displayMetrics.heightPixels);
     }
     /*
     public GamePanel(Bitmap orange, Bitmap img, Bitmap img2, Bitmap img3,Bitmap wake,Bitmap water, int x)
@@ -76,6 +81,8 @@ public class GamePanel
     public void draw(Canvas canvas)
     {
         canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint2);
+      //  canvas.drawRect(left, paint);
+      //  canvas.drawRect(right, paint3);
         if(boat.hitbox.intersect(barrel.hitbox)){
             if(boat.boatexplosion.playedOnce()){
                 canvas.drawRect(0, 0, Display.displayMetrics.widthPixels, Display.displayMetrics.heightPixels, paint3);
@@ -88,7 +95,12 @@ public class GamePanel
         water.draw(canvas);
         orange.draw(canvas);
         barrel.draw(canvas);
-        boat.draw(canvas);
+        if(touchOn == 2){
+            boat.touchDraw(canvas);
+        }
+        else if (touchOn == 1){
+            boat.draw(canvas);
+        }
         canvas.drawText("" + score, 0, 100, paint);
         canvas.drawText("High Score:" + highScore, 0, 500, paint);
 
@@ -122,7 +134,12 @@ public class GamePanel
             if (score > highScore)
                 setHighScore(score);
         }
-        boat.update();
+        if(touchOn == 2){
+            boat.touchUpdate();
+        }
+        else if (touchOn == 1){
+            boat.update();
+        }
         orange.update(x);
         barrel.update(x);
         if (orange.hitbox.bottom >= 1800){
@@ -130,7 +147,7 @@ public class GamePanel
 
         }
         if(barrel.hitbox.bottom >= 1900){
-            barrel.resetX(((int)(Math.random()*(x-200))));
+            barrel.resetX(((int) (Math.random()*(x-200))));
         }
     }
     public void setHighScore(int num)
@@ -148,5 +165,16 @@ public class GamePanel
             }
         }
             return temp;
+    }
+    public void downTouch(int x, int y, int pointerNumber) {
+        if(left.contains(x,y)){
+            boat.moveLeft();
+        }
+        if(right.contains(x,y)){
+            boat.moveRight();
+        }
+    }
+    public void upTouch(int x, int y,int pointerNumber) {
+        boat.straighten();
     }
 }

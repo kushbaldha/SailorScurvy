@@ -58,16 +58,25 @@ public class IMGLoader
         temp = BitmapFactory.decodeResource(resources, R.drawable.explosionboat);
         g.imgLoad(temp);
 
-        temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.sailor), BitmapFactory.decodeResource(resources, R.drawable.sailor).getWidth()/2, BitmapFactory.decodeResource(resources, R.drawable.sailor).getHeight()/2, true);
+        temp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.sailor), BitmapFactory.decodeResource(resources, R.drawable.sailor).getWidth() / 2, BitmapFactory.decodeResource(resources, R.drawable.sailor).getHeight() / 2, true);
         t.imgLoad(temp);
-        temp = BitmapFactory.decodeResource(resources,R.drawable.playbutton);
+        temp = BitmapFactory.decodeResource(resources, R.drawable.playbutton1);
+        t.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources,R.drawable.quitbutton);
+        t.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources,R.drawable.touchtoggle);
+        t.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources,R.drawable.tilttoggle);
+        t.imgLoad(temp);
+        temp = BitmapFactory.decodeResource(resources,R.drawable.titletext);
         t.imgLoad(temp);
     }
     /*
     public GamePanel getGamePanel()
     {
         Bitmap temp1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.orange), BitmapFactory.decodeResource(resources, R.drawable.orange).getWidth() / 2, BitmapFactory.decodeResource(resources, R.drawable.orange).getHeight() / 2, true);
-        Bitmap temp2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.wake), BitmapFactory.decodeResource(resources, R.drawable.wake).getWidth()*2, BitmapFactory.decodeResource(resources, R.drawable.wake).getHeight()* 2, true);
+        Bitmap temp2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.wake), BitmapFact
+        ory.decodeResource(resources, R.drawable.wake).getWidth()*2, BitmapFactory.decodeResource(resources, R.drawable.wake).getHeight()* 2, true);
         Bitmap temp3 =  Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,R.drawable.water2), BitmapFactory.decodeResource(resources, R.drawable.water3).getWidth()*2,BitmapFactory.decodeResource(resources, R.drawable.water3).getHeight()* 2, true);
         return new GamePanel(temp1, BitmapFactory.decodeResource(resources, R.drawable.boatforward),
                 BitmapFactory.decodeResource(resources,
