@@ -20,7 +20,7 @@ public class SFXLoader {
             start();
         }
         public void start(){
-            temp = MediaPlayer.create(context, R.raw.boatso);
+            temp = MediaPlayer.create(context, R.raw.boats);
             temp.setLooping(true);
             g.sfxLoad(temp);
             temp = MediaPlayer.create(context, R.raw.beeps);

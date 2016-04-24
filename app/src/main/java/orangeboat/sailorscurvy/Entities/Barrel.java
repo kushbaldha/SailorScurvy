@@ -24,6 +24,14 @@ public class Barrel extends Item {
        // itemAnimation.update();
         super.update();
     }
+    public void updateSlow(int x){
+        y += (x+hitbox.top)*.020;
+        super.update();
+    }
+    public void updateFast(int x){
+        y += (x+hitbox.top)*.055;
+        super.update();
+    }
     public void resetX(int x){
         super.x = x;
         super.y = 0;

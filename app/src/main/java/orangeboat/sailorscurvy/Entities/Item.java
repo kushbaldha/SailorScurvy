@@ -36,6 +36,7 @@ public class Item extends Entity {
     }
     public void update(){
         super.update();
+       // y += (x+hitbox.top)*.035;
         hitbox.set(hitbox.left+img.getWidth()/12,hitbox.top+img.getHeight()/15,
                hitbox.right-img.getWidth()/12,hitbox.bottom-img.getHeight()/2);
         itemAnimation.update();

@@ -13,7 +13,18 @@ public class PowerUp extends Item {
         super(img, x, y);
         this.type = type;
     }
-    public void load(){}
-    public void draw(Canvas canvas){}
-    public void update(){}
+    public void load(){
+        super.load();
+    }
+    public void draw(Canvas canvas){
+        canvas.drawBitmap(itemAnimation.getImage(), x, y, null);
+    }
+    public void update(int x){
+        y += (x+hitbox.top)*.035;
+        super.update();
+    }
+    public void resetX(int x){
+        super.x = x;
+        super.y = 0;
+    }
 }
