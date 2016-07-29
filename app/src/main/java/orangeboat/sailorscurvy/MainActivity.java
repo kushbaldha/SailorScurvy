@@ -98,5 +98,6 @@ public class MainActivity extends AppCompatActivity{
     public void onStop()
     {
         super.onStop();
+        System.exit(0);
     }
 }
