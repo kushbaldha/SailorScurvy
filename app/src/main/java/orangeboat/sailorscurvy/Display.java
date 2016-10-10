@@ -49,7 +49,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         contextHolder= getHolder();
         mainThread = new MainThread(getHolder(),this);
         paint = new Paint();
-        paint.setColor(Color.rgb(31,123,237));
+       // paint.setColor(Color.rgb(31,123,237));
+        paint.setColor(Color.WHITE);
         displayMetrics = m;
         sensor = d;
         x = displayMetrics.widthPixels;
@@ -177,6 +178,8 @@ public class Display extends SurfaceView implements SurfaceHolder.Callback
         else if(panelSwitch == 3){
             pausePanel.draw(canvas);
         }
+        canvas.drawText("" + gamePanel.score, Display.displayMetrics.widthPixels/2, Display.displayMetrics.heightPixels-paint.getTextSize(), paint);
+        canvas.drawText("High Score:" + gamePanel.highScore, 0, Display.displayMetrics.heightPixels - paint.getTextSize(), paint);
     }
     public void newThread() {
         mainThread = new MainThread(contextHolder, this);

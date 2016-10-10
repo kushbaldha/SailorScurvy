@@ -29,6 +29,7 @@ public class GamePanel
     Citrus orange;
     Water water;
     PowerUp shield;
+    PowerUp timeSlower;
     public Rect left, right, pause;
     public int touchOn = 1;
     public boolean gameEnded;
@@ -40,6 +41,7 @@ public class GamePanel
     Paint paint2 = new Paint();
     Paint paint3 = new Paint();
     private boolean shieldOn = false;
+    private boolean timeSlow = false;
     public GamePanel(int x){
         this.x = x;
         paint2 = new Paint();
@@ -72,6 +74,7 @@ public class GamePanel
         sfxloader.get(0).seekTo(sfxstart);
        // sfxloader.get(2).start();
         shield = new PowerUp(loader.get(9),(int)(Math.random()*(6*x-200)), 0, 2);
+        timeSlower = new PowerUp(loader.get(10),(int)(Math.random()*(7*x-200)), 0, 3);
         orange = new Citrus(loader.get(0), (int)(Math.random()*(x-200)), 0, 3);
         boat = new Boat(loader.get(2), loader.get(3), loader.get(4), 500,1000, loader.get(1), x, loader.get(13));
         water = new Water(loader.get(5));
@@ -79,6 +82,7 @@ public class GamePanel
         barrel = new Barrel(loader.get(12), (int)(Math.random()*(x-200)), 0);
         pause = new Rect(Display.displayMetrics.widthPixels-loader.get(14).getWidth(),0, Display.displayMetrics.widthPixels, loader.get(14).getHeight());
         shield.load();
+        timeSlower.load();
         boat.load();
         orange.load();
         water.load();
@@ -105,6 +109,7 @@ public class GamePanel
         orange.draw(canvas);
         barrel.draw(canvas);
         shield.draw(canvas);
+        timeSlower.draw(canvas);
         if(touchOn == 2){
             boat.touchDraw(canvas);
         }
@@ -112,8 +117,6 @@ public class GamePanel
             boat.draw(canvas);
         }
         canvas.drawBitmap(loader.get(14), Display.displayMetrics.widthPixels - loader.get(14).getWidth(), 0, null);
-        canvas.drawText("" + score, Display.displayMetrics.widthPixels/2, Display.displayMetrics.heightPixels-paint.getTextSize(), paint);
-        canvas.drawText("High Score:" + highScore, 0, Display.displayMetrics.heightPixels - paint.getTextSize(), paint);
         if(shieldOn) {
             canvas.drawText("SHIELD ACTIVE", 50, 50, paint);
         }
@@ -128,6 +131,7 @@ public class GamePanel
            else{
                 barrel.resetX((int)(Math.random() * (x - 200)));
                 shieldOn = false;
+                timeSlow = false;
                 if (sfxloader.get(1).isPlaying()) {
                     sfxloader.get(0).seekTo(sfxloader.get(0).getCurrentPosition());
                 }
@@ -151,6 +155,15 @@ public class GamePanel
             sfxloader.get(0).pause();
             sfxloader.get(1).start();
         }
+        if(boat.hitbox.intersect(timeSlower.hitbox)){
+            timeSlower.resetX((int) (Math.random() * (6*x-200)));
+            timeSlow = true;
+            if (sfxloader.get(0).isPlaying()) {
+                sfxloader.get(1).seekTo(sfxloader.get(0).getCurrentPosition());
+            }
+            sfxloader.get(0).pause();
+            sfxloader.get(2).start();
+        }
         /*
         if(score > 5) { //errg switch
             if (sfxloader.get(0).isPlaying()) {
@@ -167,8 +180,14 @@ public class GamePanel
             boat.update();
         }
         shield.update(x);
+        timeSlower.update(x);
         orange.update(x);
-        barrel.update(x);
+        if(timeSlow){
+            barrel.updateSlow(x);
+        }
+        else {
+            barrel.update(x);
+        }
         if (orange.hitbox.bottom >= 1800){
             orange.resetX((int)(Math.random()*(x-200)));
         }
